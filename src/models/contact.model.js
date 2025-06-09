@@ -3,28 +3,28 @@ const mongoose = require('mongoose');
 const contactSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, 'Name is required'],
     trim: true
   },
   email: {
     type: String,
-    required: true,
+    required: [true, 'Email is required'],
     trim: true,
-    lowercase: true
+    lowercase: true,
+    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email']
   },
   phone: {
     type: String,
-    required: true,
     trim: true
   },
   service: {
     type: String,
-    required: true,
-    trim: true
+    required: [true, 'Service is required'],
+    enum: ['electrical', 'telecom', 'security', 'furniture', 'civil', 'industrial', 'multiple']
   },
   message: {
     type: String,
-    required: true,
+    required: [true, 'Message is required'],
     trim: true
   },
   status: {

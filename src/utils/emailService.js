@@ -1,20 +1,21 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: false,
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: process.env.SMTP_SECURE === 'true',
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS
+  }
 });
 
 const sendContactEmail = async (contactData) => {
   try {
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, // Send to admin
+    // Email to admin
+    await transporter.sendMail({
+      from: process.env.SMTP_FROM,
+      to: process.env.ADMIN_EMAIL,
       subject: 'New Contact Form Submission',
       html: `
         <h2>New Contact Form Submission</h2>
@@ -24,21 +25,12 @@ const sendContactEmail = async (contactData) => {
         <p><strong>Service:</strong> ${contactData.service}</p>
         <p><strong>Message:</strong></p>
         <p>${contactData.message}</p>
-      `,
-    };
+      `
+    });
 
-    await transporter.sendMail(mailOptions);
-    return true;
-  } catch (error) {
-    console.error('Email sending error:', error);
-    return false;
-  }
-};
-
-const sendConfirmationEmail = async (contactData) => {
-  try {
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    // Confirmation email to user
+    await transporter.sendMail({
+      from: process.env.SMTP_FROM,
       to: contactData.email,
       subject: 'Thank you for contacting us',
       html: `
@@ -46,23 +38,22 @@ const sendConfirmationEmail = async (contactData) => {
         <p>Dear ${contactData.name},</p>
         <p>We have received your message and will get back to you shortly.</p>
         <p>Here's a summary of your submission:</p>
-        <p><strong>Service:</strong> ${contactData.service}</p>
-        <p><strong>Message:</strong> ${contactData.message}</p>
-        <br>
-        <p>Best regards,</p>
-        <p>Your Company Name</p>
-      `,
-    };
+        <ul>
+          <li><strong>Service:</strong> ${contactData.service}</li>
+          <li><strong>Message:</strong> ${contactData.message}</li>
+        </ul>
+        <p>If you have any urgent queries, please call us at +1 (234) 567-8900.</p>
+        <p>Best regards,<br>Your Company Name</p>
+      `
+    });
 
-    await transporter.sendMail(mailOptions);
     return true;
   } catch (error) {
-    console.error('Confirmation email sending error:', error);
+    console.error('Email sending failed:', error);
     return false;
   }
 };
 
 module.exports = {
-  sendContactEmail,
-  sendConfirmationEmail,
+  sendContactEmail
 }; 

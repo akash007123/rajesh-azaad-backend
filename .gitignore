@@ -1,25 +1,58 @@
-# Ignore OS/system files
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS files
 .DS_Store
 Thumbs.db
 
-# Ignore IDE/project files
+# Editor directories and files
 .idea/
 .vscode/
-*.swp
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 
-# Ignore compiled files
-*.class
-*.exe
-*.dll
-*.o
-*.so
+# Coverage directory used by testing tools
+coverage/
 
-# Ignore dependencies
-node_modules/
-venv/
-.env
-
-# Ignore build/output
-build/
+# Build output
 dist/
-*.log
+build/
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# REPL history
+.node_repl_history
+
+# TypeScript output (if using TS)
+*.tsbuildinfo
+
+# MongoDB data directory (if included locally)
+data/db/
+
+# PM2 logs
+pids/
+*.pm2/logs
