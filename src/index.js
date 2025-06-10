@@ -18,6 +18,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:8080',
   'http://localhost:8081',
+  'https://aazadinfrastructure.netlify.app/',
+  'https://classy-cranachan-27800c.netlify.app/',
   process.env.FRONTEND_URL
 ].filter(Boolean); // Remove any undefined values
 
