@@ -24,6 +24,15 @@ app.use('/api/', limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// CORS configuration
+const corsOptions = {
+  origin: function (origin, callback) {
+    callback(null, origin); // reflect the request origin
+  },
+  credentials: true
+};
+app.use(cors(corsOptions));
+
 // Routes
 app.use('/api/contact', contactRoutes);
 
@@ -49,15 +58,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-  res.header('Access-Control-Allow-Origin', 'https://aazadinfrastructure.netlify.app/');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(204);
-  }
-  next();
-}); 
