@@ -10,6 +10,8 @@ const contactRoutes = require('./routes/contact.routes');
 
 const app = express();
 
+app.set('trust proxy', 1); // trust first proxy
+
 // Security middleware
 app.use(helmet());
 
@@ -26,7 +28,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration
 const corsOptions = {
-  origin: "*",
+  origin: [
+    "https://aazadinfrastructure.netlify.app",
+    "https://azaad-dashboard.netlify.app/",
+    "http://localhost:3000" // for local development, optional
+  ],
   credentials: true
 };
 app.use(cors(corsOptions));
