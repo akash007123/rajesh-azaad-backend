@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 const corsOptions = {
   origin: [
     "https://aazadinfrastructure.netlify.app",
-    "https://azaad-dashboard.netlify.app/",
+    "https://azaad-dashboard.netlify.app",
     "http://localhost:3000" // for local development, optional
   ],
   credentials: true
