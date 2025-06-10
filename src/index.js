@@ -31,6 +31,8 @@ const corsOptions = {
   origin: [
     "https://aazadinfrastructure.netlify.app",
     "https://azaad-dashboard.netlify.app",
+    "http://localhost:8080",
+    "http://localhost:8081",
     "http://localhost:3000" // for local development, optional
   ],
   credentials: true

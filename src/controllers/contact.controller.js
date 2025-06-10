@@ -9,6 +9,16 @@ exports.createContact = async (req, res) => {
 
     // Send emails
     const emailSent = await sendContactEmail(contact);
+    
+    if (!emailSent) {
+      console.error('Failed to send email for contact:', contact._id);
+      // Still return success to user but log the email failure
+      return res.status(201).json({
+        success: true,
+        data: contact,
+        message: 'Contact form submitted successfully, but email notification failed'
+      });
+    }
 
     res.status(201).json({
       success: true,
@@ -16,6 +26,7 @@ exports.createContact = async (req, res) => {
       message: 'Contact form submitted successfully'
     });
   } catch (error) {
+    console.error('Contact creation error:', error);
     res.status(400).json({
       success: false,
       message: error.message
