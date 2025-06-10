@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
@@ -12,34 +11,6 @@ const app = express();
 
 // Security middleware
 app.use(helmet());
-
-// CORS configuration
-// const allowedOrigins = [
-//   'http://localhost:3000',
-//   'http://localhost:8080',
-//   'http://localhost:8081',
-//   'https://aazadinfrastructure.netlify.app/',
-//   'https://classy-cranachan-27800c.netlify.app/',
-//   'https://classy-cranachan-27800c.netlify.app/dashboard',
-//   'https://aazadinfrastructure.netlify.app/contact-table',
-//   process.env.FRONTEND_URL
-// ].filter(Boolean); // Remove any undefined values
-
-// app.use(cors({
-  // origin: function(origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-//     if (!origin) return callback(null, true);
-    
-//     if (allowedOrigins.indexOf(origin) === -1) {
-//       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-//       return callback(new Error(msg), false);
-//     }
-//     return callback(null, true);
-//   },
-//   credentials: true,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization']
-// }));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -76,4 +47,4 @@ mongoose.connect(process.env.MONGODB_URI, {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-}); 
+});
